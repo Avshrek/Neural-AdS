@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.env
+venv/
+env/
+*.pt
+# Note: We are NOT ignoring .pth here because your FNO model is small enough to host on GitHub, which is great for people who want to clone and run it immediately.
+data_holography/
+results/
+*.npy
+*.pt
