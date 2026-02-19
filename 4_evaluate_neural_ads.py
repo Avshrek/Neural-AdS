@@ -3,9 +3,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 import scipy.sparse as sp
 import scipy.sparse.linalg as spla
 import os
+import time # Added to prevent overwriting files
 
 # --- CONFIGURATION ---
 MODEL_PATH = os.path.join("models", "final_fno_model.pth") 
@@ -16,7 +18,7 @@ WIDTH = 32
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # ==========================================
-# 1. MODEL ARCHITECTURE (Standard FNO)
+# 1. MODEL ARCHITECTURE
 # ==========================================
 class SpectralConv2d(nn.Module):
     def __init__(self, in_channels, out_channels, modes1, modes2):
@@ -96,7 +98,7 @@ def get_test_sample(grid_size=64):
     return x_input, sol
 
 # ==========================================
-# 3. EVALUATION
+# 3. EVALUATION & VISUALIZATION
 # ==========================================
 model = FNO2d(MODES, MODES, WIDTH).to(device)
 model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
@@ -111,30 +113,41 @@ with torch.no_grad():
 
 prediction_physical = prediction_norm * y_raw.std() + y_raw.mean()
 
-# --- METRIC CALCULATION ---
-# Global MAE (The Physics Engine Score)
+data_range = np.max(y_raw) - np.min(y_raw)
 mae = np.mean(np.abs(y_raw - prediction_physical))
+mae_pct = (mae / data_range) * 100
 
-# Max Error Percentage (The Interior Stress Test)
 valid_y = y_raw[2:, :]
 valid_pred = prediction_physical[2:, :]
 max_err = np.max(np.abs(valid_y - valid_pred))
-data_range = np.max(y_raw) - np.min(y_raw)
 max_err_pct = (max_err / data_range) * 100
 
-# Visualization
-fig, ax = plt.subplots(1, 3, figsize=(18, 5))
-im1 = ax[0].imshow(y_raw, cmap='inferno', vmin=-1, vmax=1)
-ax[0].set_title("Ground Truth (Physics)")
-plt.colorbar(im1, ax=ax[0])
+# --- THE UI SPACING FIX ---
+fig, axes = plt.subplots(1, 3, figsize=(20, 6)) # Widened canvas
 
-im2 = ax[1].imshow(prediction_physical, cmap='inferno', vmin=-1, vmax=1)
-ax[1].set_title(f"Neural-AdS AI (MAE: {mae:.5f})")
-plt.colorbar(im2, ax=ax[1])
+def add_colorbar(im, ax):
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes("right", size="5%", pad=0.15)
+    return plt.colorbar(im, cax=cax)
 
-im3 = ax[2].imshow(np.abs(y_raw - prediction_physical), cmap='binary', vmin=0, vmax=max_err) 
-ax[2].set_title(f"Error (Max Interior: {max_err_pct:.2f}%)")
-plt.colorbar(im3, ax=ax[2])
+im1 = axes[0].imshow(y_raw, cmap='inferno', vmin=-1, vmax=1)
+axes[0].set_title("Ground Truth (Physics)", pad=15, fontsize=14)
+add_colorbar(im1, axes[0])
 
-plt.savefig("holographic_impact_final.png")
+im2 = axes[1].imshow(prediction_physical, cmap='inferno', vmin=-1, vmax=1)
+axes[1].set_title(f"Neural-AdS AI (Global Error: {mae_pct:.2f}%)", pad=15, fontsize=14)
+add_colorbar(im2, axes[1])
+
+im3 = axes[2].imshow(np.abs(y_raw - prediction_physical), cmap='Reds', vmin=0, vmax=max_err) 
+axes[2].set_title(f"Boundary Artifacts (Peak: {max_err_pct:.2f}%)", pad=15, fontsize=14)
+add_colorbar(im3, axes[2])
+
+# w_pad forces a hard physical gap between the plots so text cannot collide
+plt.tight_layout(w_pad=4.0)
+
+# --- THE NO-OVERWRITE SAVE FIX ---
+filename = f"holographic_MAE_{mae_pct:.2f}_Max_{max_err_pct:.2f}_{int(time.time())}.png"
+plt.savefig(filename, bbox_inches='tight', dpi=300)
+
+print(f"✅ Generated new image: {filename}")
 plt.show()
