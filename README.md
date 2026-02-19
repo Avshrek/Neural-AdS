@@ -52,34 +52,32 @@ The model was validated against an exact, hard-coded sparse matrix solver using 
 ### Prerequisites
 ```bash
 pip install torch numpy scipy matplotlib
+```
 1. Generate the Physics Database
 Run this to generate the 10,000 synthetic universes used for training (Warning: This will generate several gigabytes of data).
 
 ```
-```
-
 Bash
 python 1_generate_physics.py
+```
 2. Train the Holographic Engine
 The FNO architecture is defined in _2_model_fno.py. To train the model from scratch using the generated dataset:
 
 ```
-```
-
 Bash
 python 3_train_neural_ads.py
+```
 3. Run the Evaluation (The Proof)
 To dynamically generate a random, unseen universe, test the AI against the exact physics engine, and calculate the final MAE:
 
 ```
-```
-
 Bash
 python 4_evaluate_neural_ads.py
+```
+
 🔬 Future Research & Applications
 This proof-of-concept demonstrates that FNOs can effectively act as ultra-fast surrogate models for boundary-value problems. Future iterations aim to scale this to non-linear PDEs, higher dimensions, and actual Einstein field equations to assist in computationally heavy numerical relativity research.
 
-```
 
 👨‍💻 Author
 Abhishek Chaturvedi
