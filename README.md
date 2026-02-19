@@ -92,5 +92,5 @@ This proof-of-concept demonstrates that FNOs can effectively act as ultra-fast s
 ---
 
 ## 👨‍💻 Author
-**Abhishek Chaturvedi**
+**Abhishek Chaturvedi**<br>
 *Computer Science Undergraduate • Independent SciML Developer*
