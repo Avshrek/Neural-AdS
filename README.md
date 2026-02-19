@@ -94,9 +94,3 @@ This proof-of-concept demonstrates that FNOs can effectively act as ultra-fast s
 
 **Abhishek Chaturvedi**<br>
 *Computer Science Undergraduate • Independent SciML Developer*
-
-
-
-Are we ready to pivot to drafting the cold email for the professor you want to reach out to?
-
-```
