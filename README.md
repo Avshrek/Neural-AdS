@@ -89,6 +89,8 @@ python 4_evaluate_neural_ads.py
 
 This proof-of-concept demonstrates that FNOs can effectively act as ultra-fast surrogate models for boundary-value problems. Future iterations aim to scale this to non-linear PDEs, higher dimensions, and actual Einstein field equations to assist in computationally heavy numerical relativity research.
 
+---
+
 ## 👨‍💻 Author
 **Abhishek Chaturvedi**
 *Computer Science Undergraduate | Independent SciML Developer*
