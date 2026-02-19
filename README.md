@@ -43,6 +43,7 @@ The model was validated against an exact, hard-coded sparse matrix solver.
 
 ---
 
+
 ## 💻 Quick Start
 
 ### Prerequisites
@@ -53,6 +54,9 @@ To generate a random universe and test the AI against the physics engine:
 
 Bash
 python 4_evaluate_neural_ads.py
+
+```
+
 👨‍💻 Author
 Abhishek Chaturvedi
 Computer Science Undergraduate | AI & SciML Researcher
