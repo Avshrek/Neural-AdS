@@ -22,6 +22,7 @@ By operating in the frequency domain, this model achieves a **0.02 Mean Absolute
 
 In the context of the AdS/CFT correspondence, information on a lower-dimensional boundary encodes the geometry of the higher-dimensional bulk. 
 
+
 Traditional computational physics relies on numerical methods like Finite Difference (FDM) to solve the underlying differential equations. These methods scale poorly as grid resolution increases because they must iterate through every pixel sequentially.
 
 **Neural-AdS** replaces the traditional solver with a neural surrogate:
@@ -52,33 +53,43 @@ The model was validated against an exact, hard-coded sparse matrix solver using 
 ### Prerequisites
 ```bash
 pip install torch numpy scipy matplotlib
+
 ```
-1. Generate the Physics Database
+
+### 1. Generate the Physics Database
+
 Run this to generate the 10,000 synthetic universes used for training (Warning: This will generate several gigabytes of data).
 
-```
-Bash
+```bash
 python 1_generate_physics.py
-```
-2. Train the Holographic Engine
-The FNO architecture is defined in _2_model_fno.py. To train the model from scratch using the generated dataset:
 
 ```
-Bash
+
+### 2. Train the Holographic Engine
+
+The FNO architecture is defined in `_2_model_fno.py`. To train the model from scratch using the generated dataset:
+
+```bash
 python 3_train_neural_ads.py
+
 ```
-3. Run the Evaluation (The Proof)
+
+### 3. Run the Evaluation (The Proof)
+
 To dynamically generate a random, unseen universe, test the AI against the exact physics engine, and calculate the final MAE:
 
-```
-Bash
+```bash
 python 4_evaluate_neural_ads.py
+
 ```
 
-🔬 Future Research & Applications
+---
+
+## 🔬 Future Research & Applications
+
 This proof-of-concept demonstrates that FNOs can effectively act as ultra-fast surrogate models for boundary-value problems. Future iterations aim to scale this to non-linear PDEs, higher dimensions, and actual Einstein field equations to assist in computationally heavy numerical relativity research.
 
+## 👨‍💻 Author
 
-👨‍💻 Author
-Abhishek Chaturvedi
-Computer Science Undergraduate | AI & SciML Researcher
+**Abhishek Chaturvedi**
+*Computer Science Undergraduate | AI & SciML Researcher*
