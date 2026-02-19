@@ -55,15 +55,24 @@ pip install torch numpy scipy matplotlib
 1. Generate the Physics Database
 Run this to generate the 10,000 synthetic universes used for training (Warning: This will generate several gigabytes of data).
 
+```
+```
+
 Bash
 python 1_generate_physics.py
 2. Train the Holographic Engine
 The FNO architecture is defined in _2_model_fno.py. To train the model from scratch using the generated dataset:
 
+```
+```
+
 Bash
 python 3_train_neural_ads.py
 3. Run the Evaluation (The Proof)
 To dynamically generate a random, unseen universe, test the AI against the exact physics engine, and calculate the final MAE:
+
+```
+```
 
 Bash
 python 4_evaluate_neural_ads.py
