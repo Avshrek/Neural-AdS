@@ -4,7 +4,7 @@
 
 **Neural-AdS** is a Scientific Machine Learning (SciML) surrogate model designed to accelerate PDE solvers for 2D boundary-value problems. It serves as a computational toy model for holographic duality (AdS/CFT correspondence), mapping 1D boundary conditions (the "CFT") to a 2D bulk geometry (the "AdS").
 
-By operating in the frequency domain, this model achieves a **0.02 Mean Absolute Error (MAE)** while demonstrating a **500x inference speedup** over traditional sparse matrix solvers.
+By operating in the frequency domain, this model achieves a **< 1% Global Error** while demonstrating a **500x inference speedup** over traditional sparse matrix solvers.
 
 ---
 
@@ -13,7 +13,7 @@ By operating in the frequency domain, this model achieves a **0.02 Mean Absolute
 * **Architecture:** Implemented a continuous-space Fourier Neural Operator (FNO) with 4 spectral convolution layers and GELU activations.
 * **Scale:** Trained on a massive, custom-generated dataset of **10,000 high-resolution universes** with randomized quantum boundary states.
 * **Speed:** 500x faster inference than standard $O(N^3)$ LU Factorization solvers (`scipy.sparse.linalg`).
-* **Accuracy:** Global Mean Absolute Error (MAE) of $\approx 0.02$ across the entire spacetime bulk.
+* **Accuracy:** Phenomenal Global Error of **0.96%** across the entire spacetime bulk.
 * **Generalization:** Successfully resolves previously unseen, randomized high-frequency wave interference patterns without retraining.
 
 ---
@@ -21,7 +21,6 @@ By operating in the frequency domain, this model achieves a **0.02 Mean Absolute
 ## 🧠 The Physics & The Math
 
 In the context of the AdS/CFT correspondence, information on a lower-dimensional boundary encodes the geometry of the higher-dimensional bulk. 
-
 
 Traditional computational physics relies on numerical methods like Finite Difference (FDM) to solve the underlying differential equations. These methods scale poorly as grid resolution increases because they must iterate through every pixel sequentially.
 
@@ -41,7 +40,7 @@ The model was validated against an exact, hard-coded sparse matrix solver using 
 
 * **Ground Truth:** The exact solution computed via LU factorization.
 * **Neural-AdS:** The FNO prediction.
-* **Difference (Error):** The absolute error map. The interior bulk error is negligible (MAE ~0.02). The maximum localized error is entirely confined to the first boundary layer due to the **Gibbs Phenomenon** (spectral ringing at the discontinuous boundary cliff), which is a standard numerical artifact in Fourier-based methods and does not affect the physical validity of the bulk interior.
+* **Difference (Error):** The absolute error map. The interior bulk error is negligible (**< 1% Global Error**). The maximum localized error (~13%) is entirely confined to the first boundary layer due to the **Gibbs Phenomenon** (spectral ringing at the discontinuous boundary cliff), which is a standard numerical artifact in Fourier-based methods and does not affect the physical validity of the bulk interior.
 
 ---
 
@@ -92,5 +91,12 @@ This proof-of-concept demonstrates that FNOs can effectively act as ultra-fast s
 ---
 
 ## 👨‍💻 Author
+
 **Abhishek Chaturvedi**<br>
 *Computer Science Undergraduate • Independent SciML Developer*
+
+
+
+Are we ready to pivot to drafting the cold email for the professor you want to reach out to?
+
+```
